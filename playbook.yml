@@ -1,0 +1,22 @@
+- name: Configurar servidores web
+  hosts: webservers
+  become: true
+
+  tasks:
+
+    - name: Instalar nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Copiar página web
+      copy:
+        src: site/index.html
+        dest: /var/www/html/index.html
+
+    - name: Iniciar nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
